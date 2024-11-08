@@ -41,6 +41,6 @@ jobs:
       - name: Promote model to production
         if: success()
         env:
-          DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
+          DAGSHUB_PAT: ${{ secrets.DAGSHUB_AUTH }}
         run: python scripts/promote_model.py
       
