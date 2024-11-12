@@ -78,6 +78,6 @@ jobs:
           script: |
             docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/emotion01:latest
             docker run -p 80:5000 --name my-app \
-              -e DAGSHUB_PAT=${{ secrets.DAGSHUB_PAT }} \
+              -e DAGSHUB_PAT=${{ secrets.DAGSHUB_AUTH }} \
               ${{ secrets.DOCKER_HUB_USERNAME }}/emotion01:latest
       
