@@ -77,8 +77,6 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/emotion01:latest
-            docker stop my-app || true
-            docker rm my-app || true
             docker run -p 80:5000 --name my-app \
               -e DAGSHUB_PAT = ${{ secrets.DAGSHUB_PAT }} \
               ${{ secrets.DOCKER_HUB_USERNAME }}/emotion01:latest
