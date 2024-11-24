@@ -14,10 +14,10 @@ Deployment: Uses Docker and AWS ECR for containerized deployment.
 
 **Technologies Used:**
 
-Languages: Python
-Libraries: NLTK, Scikit-learn
-MLOps Tools: MLflow, DagsHub, Docker
-Cloud Services: AWS (EC2, ECR, S3)
+**Languages:** Python
+**Libraries:** NLTK, Scikit-learn
+**MLOps Tools:** MLflow, DagsHub, Docker, DVC
+**Cloud Services:** AWS (EC2, ECR, S3)
 
 Project Organization
 ------------
