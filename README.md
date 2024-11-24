@@ -1,7 +1,23 @@
 mlops-project
 ==============================
 
-a small project on MLOPs concepts and tools
+NLP Sentiment Analysis MLOps Project
+
+This project demonstrates the implementation of an end-to-end MLOps pipeline for sentiment analysis using NLP techniques. It focuses on automating model training, evaluation, and deployment while ensuring scalability, reproducibility, and collaboration.
+
+Key Features:
+
+Pipeline Automation: Implements a CI/CD workflow for seamless model deployment.
+Experiment Tracking: Utilizes MLflow for managing experiments and model versioning.
+Collaboration: Leverages DagsHub for data and model tracking.
+Deployment: Uses Docker and AWS ECR for containerized deployment.
+
+Technologies Used:
+
+Languages: Python
+Libraries: NLTK, Scikit-learn
+MLOps Tools: MLflow, DagsHub, Docker
+Cloud Services: AWS (EC2, ECR, S3)
 
 Project Organization
 ------------
