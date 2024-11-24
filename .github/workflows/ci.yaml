@@ -51,35 +51,23 @@ jobs:
           DAGSHUB_PAT: ${{ secrets.DAGSHUB_AUTH }}
         run: python -m unittest tests/test_flask_app.py
 
-      - name: Log in to Docker Hub
-        if: success()
-        uses: docker/login-action@v2
-        with: 
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-
-      - name: Build Docker image
+      - name: Login to AWS ECR
         if: success()
         run: |
-          docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/emotion01:latest .
-
-      - name: push Docker image to docker hub
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 557690605231.dkr.ecr.us-east-1.amazonaws.com
+       - name: Build Docker image
         if: success()
         run: |
-          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/emotion01:latest
-      
-      - name: Deploy to EC2
+          docker build -t mlops-ecr .
+
+      - name: Tag Docker image
         if: success()
-        uses: appleboy/ssh-action@v0.1.5
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/emotion01:latest
-            docker stop my-app || true
-            docker rm my-app || true
-            docker run -p 80:5000 --name my-app \
-              -e DAGSHUB_PAT=${{ secrets.DAGSHUB_AUTH }} \
-              ${{ secrets.DOCKER_HUB_USERNAME }}/emotion01:latest
-      
+        run: |
+          docker tag mlops-ecr:latest 557690605231.dkr.ecr.us-east-1.amazonaws.com/mlops-ecr:latest
+
+      - name: Push Docker image to AWS ECR
+        if: success()
+        run: |
+          docker push 557690605231.dkr.ecr.us-east-1.amazonaws.com/mlops-ecr:latest
